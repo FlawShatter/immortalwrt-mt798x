@@ -199,7 +199,8 @@ platform_do_upgrade() {
 	*cetron,ct3003* |\
 	*clt,r30b1* |\
 	*imou,lc-hx3001* |\
-	*jcg,q30* |\
+	jcg,q30 |\
+	jcg,q30-pro |\
 	nradio,wt9103 |\
 	cmcc,a10 |\
 	cmcc,rax3000m |\
@@ -246,7 +247,8 @@ platform_check_image() {
 	*cetron,ct3003* |\
 	*clt,r30b1* |\
 	*imou,lc-hx3001* |\
-	*jcg,q30* |\
+	jcg,q30 |\
+	jcg,q30-pro |\
 	cmcc,a10 |\
 	cmcc,rax3000m* |\
 	h3c,nx30pro |\
