@@ -331,6 +331,7 @@ if [ "$$(CONFIG_MTK_CHIP_MT7916)" = "y" ] ; then \
 fi ; \
 if [ "$$(CONFIG_MTK_CHIP_MT7981)" = "y" ] ; then \
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/mt7981/rebb/MT7981_* $(1)/lib/firmware/; \
+	$(INSTALL_BIN) ./files/mt7981-default-eeprom/MT7981_* $(1)/lib/firmware/; \
 fi ; \
 if [ "$$(CONFIG_MTK_WIFI_FW_BIN_LOAD)" = "y" ]; then \
 	if [ "$$(CONFIG_MTK_CHIP_MT7986)" = "y" ] ; then \
