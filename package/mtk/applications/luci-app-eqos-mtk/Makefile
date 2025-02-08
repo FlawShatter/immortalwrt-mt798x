@@ -1,8 +1,8 @@
 include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=LuCI support for Easy QoS
-LUCI_DEPENDS:=+tc +kmod-sched-core +kmod-ifb @!PACKAGE_luci-app-eqos
-
+LUCI_DEPENDS:=+tc +kmod-sched-core +kmod-ifb  @!PACKAGE_luci-app-eqos
+PKG_VERSION:=1.0.1
 PKG_MAINTAINER:=Jianhui Zhao <jianhuizhao329@gmail.com>
 PKG_NAME:=luci-app-eqos-mtk
 

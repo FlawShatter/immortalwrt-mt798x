@@ -140,6 +140,37 @@ function vif_in_dev(vif, dev)
         return false
     end
 end
+function vif_is_apcli(vif, dev)
+    if (string.match(vif, utils.esc(dev.apcli_ifname).."[0-9]+")) then
+        return true
+    else
+        return false
+    end
+end
+function vif_count(cfg)
+    local vif_num = 0
+    local ap_num = 0
+    local apcli_num = 0
+    for k,v in pairs(cfg.interfaces) do
+        vif_num = vif_num + 1
+        if v.config.mode == "ap" then
+            ap_num = ap_num + 1
+        elseif v.config.mode == "sta" then
+            apcli_num = apcli_num +1
+        end
+    end
+    return vif_num, ap_num, apcli_num
+end
+function mtwifi_cfg_foreach_vif(cfg, mode, func)
+    if cfg == nil or func == nil then return end
+    local vif_num,_,_ = vif_count(cfg)
+    for idx=0,vif_num-1 do
+        local v = cfg.interfaces[tostring(idx)]
+        if v.config.mode and v.config.mode == mode then
+            func(v)
+        end
+    end
+end
 
 function vif_is_apcli(vif, dev)
     if (string.match(vif, utils.esc(dev.apcli_ifname).."[0-9]+")) then

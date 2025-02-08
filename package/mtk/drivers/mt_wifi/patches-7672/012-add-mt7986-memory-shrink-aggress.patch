@@ -9,4 +9,3 @@
  #else
  	chip_cap->tkn_info.token_rx_cnt = 15360;
  #endif
-
