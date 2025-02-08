@@ -16,27 +16,27 @@ return view.extend({
 		var m, s, o;
 
 		m = new form.Map('eqos', _('EQoS'),
- 			_('Network speed control service.(Compatiable with Mediatek HNAT)'));
- 			
+			_('Network speed control service.(Compatiable with Mediatek HNAT)'));
+
 		s = m.section(form.NamedSection, 'config', 'eqos');
 
 		o = s.option(form.Flag, 'enabled', _('Enable'));
 		o.default = o.disabled;
 		o.rmempty = false;
-		
+
 		o = s.option(form.Value, 'interface', _('Load balance'),
 			_('Please set a different gateway hop for each network interface before filling in the network interface name. Fill in PPPOE-WAN for dialing and eth1 for DHCP. Leaving it blank to disable it.Please use commas as interface name separators. Example: pppoe-wan,eth1'));
 		o.rmempty = true;
-		
+
 		o = s.option(form.Flag, 'ipv6enabled', _('IPV6Enable'));
 		o.default = o.disabled;
 		o.rmempty = false;
-		
+
 		o = s.option(form.Flag, 'smarthqos', _('SMART_HWQOS'),
 		_('Enabling fair queue will automatically perform hardware offloading and forwarding for small packets, P2P downloads, and web browsing. After enabling, the maximum number available for IP speed limit will be limited to 25.'));
 		o.default = o.disabled;
 		o.rmempty = false;
-		
+
 		o = s.option(form.Value, 'download', _('Download speed (Mbit/s)'),
 			_('Total download bandwidth.'));
 		o.datatype = 'and(uinteger,min(1))';
@@ -46,7 +46,7 @@ return view.extend({
 			_('Total upload bandwidth.'));
 		o.datatype = 'and(uinteger,min(1))';
 		o.rmempty = false;
-		
+
 
 
 		s = m.section(form.TableSection, 'device', _('Speed limit and route choose based on IP address(using unique comment less than 32 will enable hardware QOS)'));
@@ -56,7 +56,7 @@ return view.extend({
 
 		o = s.option(form.Flag, 'enabled', _('Enable'));
 		o.default = o.enabled;
-		
+
 		o = s.option(form.Value, 'ip', _('IPV4 address'));
 		o.datatype = 'ip4addr';
 		for (var i of Object.entries(data[1]?.hosts))
@@ -66,7 +66,7 @@ return view.extend({
 					o.value(ip_addr, ip_host ? String.format('%s (%s)', ip_host, ip_addr) : ip_addr)
 				}
 		o.rmempty = true;
-		
+
 		var hosts = data[1]?.hosts;
 		o = s.option(form.Value, 'mac', _('IPV6 host'));
 		o.datatype = 'macaddr';
@@ -87,7 +87,7 @@ return view.extend({
 		o = s.option(form.Value, 'comment', _('Comment'));
 		o.datatype = 'and(uinteger,min(1))';
 		o.rmempty = false;
-		
+
 		o = s.option(form.Value, 'interfacename', _('InterfaceName(start from 0)'));
 		o.datatype = 'and(uinteger,min(0))';
 		o.rmempty = true;
