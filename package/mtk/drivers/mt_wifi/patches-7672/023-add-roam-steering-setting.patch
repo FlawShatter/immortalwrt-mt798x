@@ -14,7 +14,7 @@
  	BOOLEAN bRalinkBurstMode;
 @@ -3963,6 +3968,24 @@
  		}
-
+ 
  		avgRssi = RTMPAvgRssi(pAd, &pEntry->RssiSample);
 +		
 +		if ( pEntry->RssiSample.Rssi_Updated && pMbss->SteeringThreshold &&
@@ -34,7 +34,7 @@
 +				snprintf(argv[2], sizeof(arg2), ""MACSTR"",MAC2STR(pEntry->Addr));}
 +				call_usermodehelper(path, argv, envp,UMH_NO_WAIT);
 +		}
-
+ 
  		if ( pEntry->RssiSample.Rssi_Updated && pMbss->RssiLowForStaKickOut &&
  			(avgRssi < pMbss->RssiLowForStaKickOut)) {
 @@ -3984,6 +4007,7 @@
@@ -42,27 +42,27 @@
  #endif
  		}
 +		
-
+ 
  		if (bDisconnectSta) {
  			/* send wireless event - for ageout */
 --- a/mt_wifi/embedded/ap/ap_cfg.c	2022-11-27 21:58:55.000000000 +0800
 +++ b/mt_wifi/embedded/ap/ap_cfg.c	2024-01-01 00:53:22.132505954 +0800
 @@ -419,6 +419,7 @@
  INT Set_AP_ASSOC_REQ_RSSI_THRESHOLD(RTMP_ADAPTER *pAd, RTMP_STRING *arg);
-
+ 
  INT	Set_AP_KickStaRssiLow_Proc(RTMP_ADAPTER *pAd, RTMP_STRING *arg);
 +INT	Set_AP_SteeringThreshold_Proc(RTMP_ADAPTER *pAd, RTMP_STRING *arg);
-
+ 
  INT Set_BasicRate_Proc(RTMP_ADAPTER *pAd, RTMP_STRING *arg);
-
-@@ -1251,6 +1252,7 @@
+ 
+@@ -1266,6 +1267,7 @@
  #endif /* SPECIFIC_TX_POWER_SUPPORT */
  	{"AssocReqRssiThres",           Set_AP_ASSOC_REQ_RSSI_THRESHOLD},
  	{"KickStaRssiLow",				Set_AP_KickStaRssiLow_Proc},
 +	{"Steeringthresold",				Set_AP_SteeringThreshold_Proc},
- 	{"PtkRekey",					Set_PtkRekey_Proc},
- #ifdef OCE_SUPPORT
- 	{"OceRssiThreshold",			Set_OceRssiThreshold_Proc},
+ #ifdef ZERO_LOSS_CSA_SUPPORT
+ 	{"KickOffSta",					Set_KickOffSta_Proc},
+ 	{"KickOffTime",					Set_KickOffTime_Proc},
 @@ -14528,6 +14530,16 @@
  	TRUE if all parameters are OK, FALSE otherwise
      ==========================================================================
@@ -81,7 +81,7 @@
  	IN  PRTMP_ADAPTER    pAd,
  	IN  RTMP_STRING *arg)
 @@ -14555,6 +14567,35 @@
-
+ 
  	return TRUE;
  }
 +
@@ -113,7 +113,7 @@
 +
 +	return TRUE;
 +}
-
+ 
  /*
      ==========================================================================
 --- a/mt_wifi/embedded/include/rtmp.h	2022-11-27 21:58:55.000000000 +0800
@@ -123,6 +123,6 @@
  	CHAR AssocReqRssiThreshold;
  	CHAR RssiLowForStaKickOut;
 +	CHAR SteeringThreshold;
-
+ 
  #ifdef CUSTOMER_VENDOR_IE_SUPPORT
  	/*For AP vendor ie*/
